@@ -1,0 +1,85 @@
+
+  Hello 8-) (I don't mean the cookie (Hehe))
+
+    This is a program called "XArc". I've ported it from C to E to show
+    the functionality of the "xpkarchive.library". The original one was
+    written by Matthias Meixner who has also written the named library.
+    To show more functionality I have changed the program a bit.
+    Currently it is a (VERY) simple archieving utility because it's
+    more or less an example of how to program the "xpkarchive.library"
+    in E. I think that this program has the potential to replace "lha"
+    and "lzx" because it is very easy to add a new compression algorithm
+    by keeping the same interface. In addition you can select algorithms
+    which are very good for a special kind of data. F.e. you can use
+    "SQSH" for sample-data. To show you the functions of Xarc I've
+    created a list which you can follow. The only thing you have to
+    do, is to start a shell and follow the steps below. All stuff
+    behind "1>" should be entered in the shell. Currently I'm a bit
+    ambitioned to create a better version which should be a complete
+    replacement for "lha" and "lzx" but there is another project I'm
+    working on which has higher priority.
+
+
+  0. Do the following to make the sequence complete !
+
+      1> Filenote C:Copy "Fred Flintstone has a big nose"
+
+  1. Adding the file "C:Copy" to the archive "ram:Dummy.xar" with the method "ZOO"
+
+      1> Xarc M ZOO ram:Dummy C:Copy
+
+      -> NOTE: As you can see I haven't added the extension ".xar" to
+      ->       the archive-name because it will be added automatically.
+      ->       You can replace the letter "M" by "METHOD".
+      ->       The devicepart "C:" will be removed.
+
+  2. Do the same action again with the difference that the file will be added
+     with a generation number of 20
+
+      1> Xarc METHOD ZOO ram:Dummy C:Copy\20
+
+      -> NOTE: Whenever you want to specify a generation number you have
+      ->       to do that this way. Simply adding a backslash followed
+      ->       by the generation-number. Never use spaces between the
+      ->       number and the path.
+
+  3. List the contents of the archive !
+
+      1> Xarc LIST ram:Dummy
+
+      -> NOTE: This is what you see if you have done all correct.
+      ->       The number of bytes may vary if you are using another
+      ->       version of this command.
+      ->
+
+      Original Packed Ratio  Date     Time    Gen Mode Name
+      -------- ------ ----- -------- -------- --- ---- ----------
+          5496   3107 43.47 12.08.98 14:50:28   1    0 Copy
+      :Fred Flintstone has a big nose
+          5496   3107 43.47 12.08.98 14:50:28  20    0 Copy
+      :Fred Flintstone has a big nose
+      -------- ------ -----
+         10992   6214 43.47
+
+  4. List the contents again but without the filenotes
+
+      1> Xarc L ram:Dummy.xar NOCOMMENT
+
+      -> NOTE: As you can see all functions correct.
+
+      Original Packed Ratio  Date     Time    Gen Mode Name
+      -------- ------ ----- -------- -------- --- ---- ----------
+          5496   3107 43.47 12.08.98 14:50:28   1    0 Copy
+          5496   3107 43.47 12.08.98 14:50:28  20    0 Copy
+      -------- ------ -----
+         10992   6214 43.47
+
+  5. Extract the file with the generation number of 20.
+
+      1> Xarc x ram:Dummy.xar Copy
+
+      -> NOTE: This will extract the correct file while the file
+      ->       with the highest generation number is the "newest" one.
+      ->       If you want to be sure simply add "\20" to the filename.
+
+
